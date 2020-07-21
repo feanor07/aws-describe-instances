@@ -4,22 +4,6 @@ This is a small project to illustrate `DescribeInstancesRequest` for `AWS EC2 in
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html
 )).
 
-# Motivation
-Sometime ago I ran into an issue 
-while using [hazelcast-aws](https://github.com/hazelcast/hazelcast-aws). I tried to make use of `security-group-name` filter 
-as indicated in the documentation, but the caching failed to work as expected within a cluster of EC2 instances within the
-same security group. Specifically, cache update on a particular instance was not visible to other instances; hence all but 
-one of the instances was returning stale data.
-
-The root cause of the issue is due to the fact that `security-group-name` filter 
-can only be used in a EC2-Classic instance as indicated at [API documentation on AWS](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html)
-(Please search for `group-name` on the provided link).
-
-There is already an open [ticket](https://github.com/hazelcast/hazelcast-aws/issues/94) targeting this issue on [hazelcast-aws](https://github.com/hazelcast/hazelcast-aws); 
-yet the documentation is still lacking a warning not to use `security-group-name` in non EC2-Classic instances.
-
-This application is only provided to demonstrate the issue mentioned.
-
 # Getting Started
 Before running the application, do not forget to update the `application.properties` with corresponding from your AWS account.
 If you do not have any EC2 instances available in the region you specified, ensure you have at least one before running this app.
@@ -40,4 +24,3 @@ To conclude, even if the instance resides in a security group named `Trial`, the
 to return the instance in the result set.
 
 This small testing illustrates that security group name search for contemporary EC2 instances (ones within a VPC) is not working!
-
